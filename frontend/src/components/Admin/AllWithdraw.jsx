@@ -28,18 +28,30 @@ const AllWithdraw = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "Mã yêu cầu", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "Mã yêu cầu", minWidth: 100, flex: 0.5 },
     {
       field: "name",
       headerName: "Tên cửa hàng",
-      minWidth: 180,
-      flex: 1.4,
+      minWidth: 80,
+      flex: 0.6,
     },
     {
-      field: "shopId",
-      headerName: "Mã cửa hàng",
-      minWidth: 180,
-      flex: 1.4,
+      field: "bankName",
+      headerName: "Tên ngân hàng",
+      minWidth: 80,
+      flex: 0.6,
+    },
+    {
+      field: "bankNumber",
+      headerName: "Số tài khoản",
+      minWidth: 80,
+      flex: 0.6,
+    },
+    {
+      field: "bankHolderName",
+      headerName: "Chủ tài khoản",
+      minWidth: 80,
+      flex: 0.6,
     },
     {
       field: "amount",
@@ -58,8 +70,8 @@ const AllWithdraw = () => {
       field: "createdAt",
       headerName: "Ngày gửi",
       type: "number",
-      minWidth: 130,
-      flex: 0.6,
+      minWidth: 80,
+      flex: 0.4,
     },
     {
       field: " ",
@@ -80,13 +92,18 @@ const AllWithdraw = () => {
       },
     },
   ];
+  console.log("withdrawData", withdrawData);
 
   const handleSubmit = async () => {
+    const amount = parseInt(
+      withdrawData?.amount.replace(/\./g, "").replace(" ₫", "")
+    );
     await axios
       .put(
         `${server}/withdraw/update-withdraw-request/${withdrawData.id}`,
         {
           sellerId: withdrawData.shopId,
+          amount: amount,
         },
         { withCredentials: true }
       )
@@ -94,6 +111,7 @@ const AllWithdraw = () => {
         toast.success("Cập nhật yêu cầu rút tiền thành công!");
         setData(res.data.withdraws);
         setOpen(false);
+        window.location.reload();
       });
   };
 
@@ -105,6 +123,9 @@ const AllWithdraw = () => {
         id: item._id,
         shopId: item.seller._id,
         name: item.seller.name,
+        bankName: item.seller.withdrawMethod.bankName,
+        bankNumber: item.seller.withdrawMethod.bankAccountNumber,
+        bankHolderName: item.seller.withdrawMethod.bankHolderName,
         amount:
           item.amount.toLocaleString("vi-VN", {
             style: "currency",
@@ -144,15 +165,19 @@ const AllWithdraw = () => {
               id=""
               onChange={(e) => setWithdrawStatus(e.target.value)}
               className="w-[200px] h-[35px] border rounded">
-              <option value={withdrawStatus}>{withdrawData.status}</option>
-              <option value={withdrawStatus}>Thành công</option>
+              <option value={"Đang xử lý"}>{withdrawData.status}</option>
+              <option value={"Thành công"}>Thành công</option>
             </select>
-            <button
-              type="submit"
-              className={`block ${styles.button} text-white !h-[42px] mt-4 text-[18px]`}
-              onClick={handleSubmit}>
-              Cập nhật
-            </button>
+            {withdrawStatus === "Thành công" ? (
+              <button
+                type="submit"
+                className={`block ${styles.button} text-white !h-[42px] mt-4 text-[18px]`}
+                onClick={handleSubmit}>
+                Cập nhật
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       )}

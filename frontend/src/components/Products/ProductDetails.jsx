@@ -39,7 +39,6 @@ const ProductDetails = ({ data }) => {
       setClick(false);
     }
   }, [data, wishlist]);
-
   const incrementCount = () => {
     setCount(count + 1);
   };
@@ -59,21 +58,29 @@ const ProductDetails = ({ data }) => {
     setClick(!click);
     dispatch(addToWishlist(data));
   };
-
-  const addToCartHandler = (id) => {
+  const addToCartHandler = (id, nameShop) => {
     const isItemExists = cart && cart.find((i) => i._id === id);
+    const isNameShop = cart && cart.find((j) => j.shop.name !== nameShop);
+
     if (isItemExists) {
       toast.error("Sản phẩm đã có trong giỏ hàng");
     } else {
-      if (data.stock < 1) {
-        toast.error("Số lượng sản phẩm có hạn!");
+      if (data.stock < count) {
+        toast.error("Sản phẩm hiện hết hàng!");
       } else {
-        const cartData = { ...data, qty: count };
-        dispatch(addTocart(cartData));
-        toast.success("Thêm sản phẩm vào giỏ hàng thành công!");
+        if (isNameShop) {
+          toast.error(
+            "Vui lòng thanh toán sản phẩm trong giỏ hàng trước khi thêm sản phẩm của cửa hàng khác"
+          );
+        } else {
+          const cartData = { ...data, qty: count };
+          dispatch(addTocart(cartData));
+          toast.success("Thêm vào giỏ hàng thành công!");
+        }
       }
     }
   };
+  console.log("products", products);
 
   const totalReviewsLength =
     products &&
@@ -204,7 +211,7 @@ const ProductDetails = ({ data }) => {
                 </div>
                 <div
                   className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
-                  onClick={() => addToCartHandler(data._id)}>
+                  onClick={() => addToCartHandler(data._id, data.shop.name)}>
                   <span className="text-white flex items-center">
                     Thêm giỏ hàng <AiOutlineShoppingCart className="ml-1" />
                   </span>

@@ -17,8 +17,8 @@ const AllProducts = () => {
   const [valEndDay, setValEndDay] = useState("");
   const [statistic, setStatistic] = useState(false);
   const [data, setData] = useState([]);
-  const { products, isLoading } = useSelector((state) => state.products);
-  const dispatch = useDispatch();
+  // const { products, isLoading } = useSelector((state) => state.products);
+  // const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get(`${server}/product/admin-all-products`, { withCredentials: true })

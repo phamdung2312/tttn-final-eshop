@@ -1,29 +1,45 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
 import { BsCartPlus } from "react-icons/bs";
 import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
 import { backend_url } from "../../server";
 import { addTocart } from "../../redux/actions/cart";
+import { toast } from "react-toastify";
 
 const Wishlist = ({ setOpenWishlist }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
 
   const removeFromWishlistHandler = (data) => {
     dispatch(removeFromWishlist(data));
   };
 
-  const addToCartHandler = (data) => {
-    const newData = { ...data, qty: 1 };
-    dispatch(addTocart(newData));
-    setOpenWishlist(false);
-  };
+  const addToCartHandler = (data, nameShop) => {
+    const isItemExists = cart && cart.find((i) => i._id === data._id);
+    const isNameShop = cart && cart.find((j) => j.shop.name !== nameShop);
 
+    if (isItemExists) {
+      toast.error("Sản phẩm đã có trong giỏ hàng");
+    } else {
+      if (data.stock < 1) {
+        toast.error("Sản phẩm hiện hết hàng!");
+      } else {
+        if (isNameShop) {
+          toast.error(
+            "Vui lòng thanh toán sản phẩm trong giỏ hàng trước khi thêm sản phẩm của cửa hàng khác"
+          );
+        } else {
+          const cartData = { ...data, qty: 1 };
+          dispatch(addTocart(cartData));
+          toast.success("Thêm vào giỏ hàng thành công!");
+        }
+      }
+    }
+  };
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
       <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll w-[90%] md:w-[50%] lg:w-[30%] bg-white flex flex-col justify-between shadow-sm">
@@ -107,13 +123,12 @@ const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
           <BsCartPlus
             size={20}
             className="cursor-pointer"
-            tile="Add to cart"
-            onClick={() => addToCartHandler(data)}
+            title="Thêm vào giỏ hàng"
+            onClick={() => addToCartHandler(data, data.shop.name)}
           />
         </div>
       </div>
     </div>
   );
 };
-
 export default Wishlist;

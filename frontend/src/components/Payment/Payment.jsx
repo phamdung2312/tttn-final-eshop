@@ -36,7 +36,7 @@ const Payment = () => {
             description: "Thanh toán đơn hàng 4D Market",
             amount: {
               currency_code: "USD",
-              value: orderData?.totalPrice/25000,
+              value: orderData?.totalPrice / 25000,
             },
           },
         ],
@@ -59,12 +59,11 @@ const Payment = () => {
 
   console.log("order", order);
 
+  // create payment paypal
   const onApprove = async (data, actions) => {
     return actions.order.capture().then(function (details) {
       const { payer } = details;
-
       let paymentInfo = payer;
-
       if (paymentInfo !== undefined) {
         paypalPaymentHandler(paymentInfo);
       }
@@ -96,10 +95,11 @@ const Payment = () => {
       });
   };
 
+  //Convert to stripe currency
   const paymentData = {
-    amount: Math.round(orderData?.totalPrice/250),
+    amount: Math.round(orderData?.totalPrice / 250),
   };
-
+  // create stripe
   const paymentHandler = async (e) => {
     e.preventDefault();
     try {
@@ -120,7 +120,7 @@ const Payment = () => {
       if (!stripe || !elements) return;
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
-          card: elements.getElement(CardNumberElement),
+          card: elements.getElement(CardNumberElement), // CardNumberElement Credit number input field
         },
       });
 

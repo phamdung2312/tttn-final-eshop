@@ -4,7 +4,7 @@ import numeral from "numeral";
 
 function RangeSlider({ onChange }) {
   const [value, setValue] = useState("");
-  
+
   const handleChange = (event) => {
     const newValue = event.target.value;
     setValue(newValue);

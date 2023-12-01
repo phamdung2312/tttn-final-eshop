@@ -22,7 +22,6 @@ const Categories = () => {
             ))}
         </div>
       </div>
-
       <div
         className={`${styles.section} bg-white p-6 rounded-lg mb-12`}
         id="categories">

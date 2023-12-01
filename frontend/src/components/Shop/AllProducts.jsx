@@ -18,7 +18,7 @@ const AllProducts = () => {
   const [statistic, setStatistic] = useState(false);
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
-  console.log("valEndDay", valEndDay);
+  console.log("seller", seller);
 
   const dispatch = useDispatch();
 

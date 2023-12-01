@@ -250,7 +250,7 @@ const AdminDashboardMain = () => {
             <DataGrid
               rows={row} // Sử dụng danh sách đã sắp xếp
               columns={columns}
-              pageSize={4}
+              pageSize={5}
               disableSelectionOnClick
               autoHeight
             />

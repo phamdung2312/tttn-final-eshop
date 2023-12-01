@@ -4,7 +4,7 @@ import EventCard from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
 import Loader from "../components/Layout/Loader";
 import Footer from "../components/Layout/Footer";
-import { FaSadTear } from "react-icons/fa"; 
+import { FaSadTear } from "react-icons/fa";
 import Meta from "../components/Layout/Meta";
 
 const EventsPage = () => {
@@ -12,7 +12,6 @@ const EventsPage = () => {
 
   // Kiểm tra xem có sự kiện nào hay không
   const hasEvents = allEvents && allEvents.length > 0;
-
   return (
     <>
       {isLoading ? (

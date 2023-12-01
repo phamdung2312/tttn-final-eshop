@@ -69,9 +69,9 @@ const Checkout = () => {
 
   // const shipping = subTotalPrice * 0.01;
   let shipping = 0;
-  if (subTotalPrice < 1000000) {
+  if (subTotalPrice <= 1000000) {
     shipping = 15000;
-  } else if (subTotalPrice > 100000 && subTotalPrice < 5000000) {
+  } else if (subTotalPrice > 1000000 && subTotalPrice < 5000000) {
     shipping = 25000;
   } else {
     shipping = 0;
@@ -90,6 +90,12 @@ const Checkout = () => {
 
         if (isCouponValid.length === 0) {
           toast.error("Mã giảm giá không áp dụng cho cửa hàng này");
+          setCouponCode("");
+        } else if (
+          subTotalPrice < res.data.couponCode?.minAmount ||
+          subTotalPrice > res.data.couponCode?.maxAmount
+        ) {
+          toast.error("Mã giảm giá không áp dụng cho đơn hàng này");
           setCouponCode("");
         } else {
           const eligiblePrice = isCouponValid.reduce(

@@ -64,27 +64,6 @@ const AllEvents = () => {
       minWidth: 130,
       flex: 0.6,
     },
-    // {
-    //   field: "Preview",
-    //   flex: 0.8,
-    //   minWidth: 100,
-    //   headerName: "Đánh giá",
-    //   type: "number",
-    //   sortable: false,
-    //   renderCell: (params) => {
-    //     const d = params.row.id;
-    //     const product_id = d.replace(/\s+/g, "-");
-    //     return (
-    //       <>
-    //         <Link to={`/product/${product_id}?isEvent=true`}>
-    //           <Button>
-    //             <AiOutlineEye size={20} />
-    //           </Button>
-    //         </Link>
-    //       </>
-    //     );
-    //   },
-    // },
     {
       field: "end",
       headerName: "Ngày kết thúc",

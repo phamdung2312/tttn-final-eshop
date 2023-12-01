@@ -16,6 +16,8 @@ const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInbox = () => {
   const { user } = useSelector((state) => state.user);
+  console.log("user1", user);
+
   const [conversations, setConversations] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState();
@@ -61,7 +63,7 @@ const UserInbox = () => {
     };
     getConversation();
   }, [user, messages]);
-
+  console.log("conversations", conversations);
   useEffect(() => {
     if (user) {
       const sellerId = user?._id;
@@ -267,6 +269,8 @@ const MessageList = ({
     navigate(`/inbox?${id}`);
     setOpen(true);
   };
+  console.log("user2", user);
+  console.log("me", me);
 
   useEffect(() => {
     setActiveStatus(online);
@@ -294,7 +298,7 @@ const MessageList = ({
         setUserData(user) ||
         setActiveStatus(online)
       }>
-        <Meta title="Nhắn tin"/>
+      <Meta title="Nhắn tin" />
       <div className="relative">
         <img
           src={`${backend_url}${user?.avatar}`}
@@ -332,6 +336,7 @@ const SellerInbox = ({
   scrollRef,
   handleImageUpload,
 }) => {
+  console.log("sellerId", sellerId);
   return (
     <div className="w-[full] min-h-full flex flex-col justify-between p-5">
       {/* message header */}

@@ -23,6 +23,8 @@ const OrderDetails = () => {
   }, [dispatch]);
 
   const data = orders && orders.find((item) => item._id === id);
+  console.log(data?.status);
+  console.log("status", status);
 
   const orderUpdateHandler = async (e) => {
     await axios
@@ -59,9 +61,6 @@ const OrderDetails = () => {
         toast.error(error.response.data.message);
       });
   };
-
-  console.log(data?.status);
-  console.log("status", status);
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>

@@ -16,7 +16,8 @@ const ShopProfileData = ({ isOwner }) => {
   const { events } = useSelector((state) => state.events);
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  console.log("products", products);
+  console.log("events", events);
   useEffect(() => {
     dispatch(getAllProductsShop(id));
     dispatch(getAllEventsShop(id));
@@ -26,6 +27,7 @@ const ShopProfileData = ({ isOwner }) => {
 
   const allReviews =
     products && products.map((product) => product.reviews).flat();
+  console.log("allReviews", allReviews);
 
   return (
     <div className="w-full">

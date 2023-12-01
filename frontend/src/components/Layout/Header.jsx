@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
-import { categoriesData, productData } from "../../static/data";
+import { categoriesData } from "../../static/data";
 
 import {
   AiOutlineHeart,
@@ -152,6 +152,7 @@ const Header = ({ activeHeading }) => {
           </div>
         </div>
       </div>
+      {/* navbar */}
       <div
         style={{ background: " linear-gradient(270deg, red, blue)" }}
         className={`${
@@ -162,9 +163,7 @@ const Header = ({ activeHeading }) => {
           {/* categories */}
           {!searchData ? (
             <div onClick={() => setDropDown(!dropDown)}>
-              <div
-                // style={searchData ? { display: "none" } : {}}
-                className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
+              <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
                 <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
                 <button
                   className={`h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md`}>

@@ -1,5 +1,5 @@
 {
-  "name": "e-shop-tutorial",
+  "name": "eshop-tttn",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -11,7 +11,7 @@
     "start": "node server.js",
     "build": "npm i"
   },
-  "author": "shahriar Sajeeb",
+  "author": "huynhvanduong",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

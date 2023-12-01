@@ -15,6 +15,7 @@ function ChartComponentAdmin({ arrData, name }) {
     day: day,
     totalData: groupedDay[day],
   }));
+  console.log("groupedDay", groupedDay);
   console.log("sumData", sumData);
   useEffect(() => {
     if (sumData) {

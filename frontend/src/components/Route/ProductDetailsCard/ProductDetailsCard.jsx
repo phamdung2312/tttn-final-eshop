@@ -36,18 +36,25 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   const incrementCount = () => {
     setCount(count + 1);
   };
-
-  const addToCartHandler = (id) => {
+  const addToCartHandler = (id, nameShop) => {
     const isItemExists = cart && cart.find((i) => i._id === id);
+    const isNameShop = cart && cart.find((j) => j.shop.name !== nameShop);
+
     if (isItemExists) {
-      toast.error("Sản phẩm đã có trong giỏ hàng!");
+      toast.error("Sản phẩm đã có trong giỏ hàng");
     } else {
       if (data.stock < count) {
-        toast.error("Số lượng sản phẩm có hạn");
+        toast.error("Sản phẩm hiện hết hàng!");
       } else {
-        const cartData = { ...data, qty: count };
-        dispatch(addTocart(cartData));
-        toast.success("Thêm vào giỏ hàng thành công!");
+        if (isNameShop) {
+          toast.error(
+            "Vui lòng thanh toán sản phẩm trong giỏ hàng trước khi thêm sản phẩm của cửa hàng khác"
+          );
+        } else {
+          const cartData = { ...data, qty: count };
+          dispatch(addTocart(cartData));
+          toast.success("Thêm vào giỏ hàng thành công!");
+        }
       }
     }
   };
@@ -119,10 +126,18 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discountPrice}$
+                    {data.discountPrice.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }) + ""}
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.originalPrice ? data.originalPrice + "$" : null}
+                    {data.originalPrice
+                      ? data.originalPrice.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }) + ""
+                      : null}
                   </h3>
                 </div>
                 <div className="flex items-center mt-12 justify-between pr-3">
@@ -162,7 +177,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                 </div>
                 <div
                   className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
-                  onClick={() => addToCartHandler(data._id)}>
+                  onClick={() => addToCartHandler(data._id, data.shop.name)}>
                   <span className="text-[#fff] flex items-center">
                     Thêm giỏ hàng <AiOutlineShoppingCart className="ml-1" />
                   </span>

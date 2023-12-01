@@ -5,16 +5,19 @@ import "chartjs-plugin-datalabels";
 function ChartComponentShop({ arrData, name }) {
   console.log("arrDataChart", arrData);
   // biểu đồ
+  //gộp các ngày trùng và tính tổng (object)
   const groupedDay = arrData?.reduce((result, order) => {
     const day = order?.day;
     const totalData = order?.total;
     result[day] = (result[day] || 0) + totalData;
     return result;
   }, {});
+  // thêm key (day, totalData)
   const sumData = Object.keys(groupedDay).map((day) => ({
     day: day,
     totalData: groupedDay[day],
   }));
+  console.log("groupedDay", groupedDay);
   console.log("sumData", sumData);
   useEffect(() => {
     new Chart(document.getElementById("acquisitions"), {

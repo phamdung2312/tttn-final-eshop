@@ -19,7 +19,7 @@ const DashboardHero = () => {
   const [valStartDay, setValStartDay] = useState("");
   const [valEndDay, setValEndDay] = useState("");
   const [statistic, setStatistic] = useState(false);
-  const targetRef = useRef();
+
   console.log("seller", seller);
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
@@ -32,9 +32,6 @@ const DashboardHero = () => {
       currency: "VND",
     }) + "";
   console.log("availableBalance", availableBalance);
-  const scrollToTarget = () => {
-    targetRef.current.scrollIntoView({ behavior: "smooth" });
-  };
 
   const handleStartDayChange = (e) => {
     setValStartDay(e.target.value);
@@ -76,56 +73,6 @@ const DashboardHero = () => {
   const totalRevenue = sumOder - sumOder * 0.1;
   console.log("sumOder", sumOder);
   console.log("getAllProducts", getAllProducts);
-  const columns = [
-    { field: "id", headerName: "Mã đơn hàng", minWidth: 150, flex: 0.7 },
-
-    {
-      field: "status",
-      headerName: "Tình trạng",
-      minWidth: 130,
-      flex: 0.7,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Đã giao hàng"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-    {
-      field: "itemsQty",
-      headerName: "Số lượng",
-      type: "number",
-      minWidth: 130,
-      flex: 0.7,
-    },
-
-    {
-      field: "total",
-      headerName: "Tổng tiền",
-      type: "number",
-      minWidth: 130,
-      flex: 0.8,
-    },
-
-    {
-      field: " ",
-      flex: 1,
-      minWidth: 150,
-      headerName: "",
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/dashboard/order/${params.id}`}>
-              <Button>
-                <AiOutlineArrowRight size={20} />
-              </Button>
-            </Link>
-          </>
-        );
-      },
-    },
-  ];
 
   return (
     <div className="w-full p-8">

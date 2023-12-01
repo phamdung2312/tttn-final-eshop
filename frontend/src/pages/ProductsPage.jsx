@@ -26,6 +26,7 @@ const ProductsPage = () => {
   const [data, setData] = useState([]);
   const [datatemp, setDatatemp] = useState([]);
   const [category, setCategory] = useState("");
+
   const searchDataFilter = useSelector((state) => state?.search.searchData);
   const searchValue = useSelector((state) => state?.search.searchValue);
 
@@ -136,7 +137,6 @@ const ProductsPage = () => {
           setCategory(categoryData);
           console.log("filterProducts2");
         }
-
         console.log("categoryData 2.1");
       } else {
         const d =

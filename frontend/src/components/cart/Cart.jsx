@@ -57,7 +57,6 @@ const Cart = ({ setOpenCart }) => {
                   {cart && cart.length} Sản phẩm
                 </h5>
               </div>
-
               {/* cart Single Items */}
               <br />
               <div className="w-full border-t">
@@ -72,7 +71,6 @@ const Cart = ({ setOpenCart }) => {
                   ))}
               </div>
             </div>
-
             <div className="px-5 mb-3">
               {/* checkout buttons */}
               <Link to="/checkout">
@@ -101,7 +99,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const totalPrice = data.discountPrice * value;
 
   const increment = (data) => {
-    if (data.stock < value) {
+    if (data.stock <= value) {
       toast.error("Hết hàng!");
     } else {
       setValue(value + 1);

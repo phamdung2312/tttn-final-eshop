@@ -220,7 +220,7 @@ const AllCoupons = () => {
                     />
                   </div>
                   <br />
-                  <div>
+                  {/* <div>
                     <label className="pb-2">Chọn sản phẩm</label>
                     <select
                       className="w-full mt-2 border h-[35px] rounded-[5px]"
@@ -236,7 +236,7 @@ const AllCoupons = () => {
                           </option>
                         ))}
                     </select>
-                  </div>
+                  </div> */}
                   <br />
                   <div>
                     <input

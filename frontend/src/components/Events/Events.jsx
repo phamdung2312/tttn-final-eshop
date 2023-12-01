@@ -15,9 +15,12 @@ const Events = () => {
           </div>
 
           <div className="w-full grid mb-4">
-            {allEvents.length !== 0 && (
+            {allEvents.map((event) => (
+              <EventCard data={event} />
+            ))}
+            {/* {allEvents.length !== 0 && (
               <EventCard data={allEvents && allEvents[0]} />
-            )}
+            )} */}
             <h4>{allEvents?.length === 0 && "Không có sự kiện nào!"}</h4>
           </div>
         </div>

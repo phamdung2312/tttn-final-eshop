@@ -1,8 +1,4 @@
 import { React, useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
-import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
@@ -14,10 +10,10 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${server}/user/forgot-password`, {
+      await axios.post(`${server}/user/forgot-password`, {
         email,
       });
-      toast.success(`Kiểm tra email ${email} để kích hoạt tài khoản của bạn!`);
+      toast.success(`Kiểm tra email ${email} để lấy lại mật khẩu của bạn!`);
       setEmail("");
     } catch (err) {
       toast.error(err.response.data.message);
@@ -60,13 +56,6 @@ const ForgotPassword = () => {
                 Gửi
               </button>
             </div>
-
-            {/* <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Đã có tài khoản?</h4>
-              <Link to="/login" className="text-blue-600 pl-2">
-                Đăng nhập
-              </Link>
-            </div> */}
           </form>
         </div>
       </div>
