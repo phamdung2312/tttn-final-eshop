@@ -9,20 +9,30 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import { IoMdClose } from "react-icons/io";
 
 const AllCoupons = () => {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [idProduct, setIdProduct] = useState();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [coupouns, setCoupouns] = useState([]);
   const [minAmount, setMinAmout] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState(null);
   const [value, setValue] = useState(null);
   const { seller } = useSelector((state) => state.seller);
-  const { products } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
+
+  const handeleAccept = () => {
+    handleDelete(idProduct);
+    setOpenDelete(false);
+  };
+  const handleOpenDelete = (id) => {
+    setOpenDelete(true);
+    setIdProduct(id);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,7 +68,6 @@ const AllCoupons = () => {
           name,
           minAmount,
           maxAmount,
-          selectedProducts,
           value,
           shopId: seller._id,
         },
@@ -104,7 +113,7 @@ const AllCoupons = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
+            <Button onClick={() => handleOpenDelete(params.id)}>
               <AiOutlineDelete size={20} />
             </Button>
           </>
@@ -220,23 +229,7 @@ const AllCoupons = () => {
                     />
                   </div>
                   <br />
-                  {/* <div>
-                    <label className="pb-2">Chọn sản phẩm</label>
-                    <select
-                      className="w-full mt-2 border h-[35px] rounded-[5px]"
-                      value={selectedProducts}
-                      onChange={(e) => setSelectedProducts(e.target.value)}>
-                      <option value="Choose your selected products">
-                        Chọn sản phẩm áp dụng
-                      </option>
-                      {products &&
-                        products.map((i) => (
-                          <option value={i.name} key={i.name}>
-                            {i.name}
-                          </option>
-                        ))}
-                    </select>
-                  </div> */}
+
                   <br />
                   <div>
                     <input
@@ -249,6 +242,34 @@ const AllCoupons = () => {
               </div>
             </div>
           )}
+        </div>
+      )}
+      {openDelete && (
+        <div
+          id="toast"
+          class="fixed inset-0 flex items-center justify-center bg-edeff7">
+          <div class="bg-[#eef3ff] rounded-lg p-4 shadow-lg relative">
+            <div
+              onClick={() => setOpenDelete(false)}
+              class="absolute top-0 right-0 mt-2 mr-2 hover:cursor-pointer">
+              <IoMdClose />
+            </div>
+            <p id="toast-message" class="text-gray-800 pt-5 flex items-center">
+              Bạn có chắc chắn muốn xóa không?
+            </p>
+            <div class="flex justify-end mt-4">
+              <button
+                onClick={handeleAccept}
+                class="px-4 py-2 rounded-md bg-blue-500 text-white mr-2 hover:bg-blue-600 hover:cursor-pointer">
+                Có
+              </button>
+              <button
+                onClick={() => setOpenDelete(false)}
+                class="px-4 py-2 rounded-md bg-gray-300 text-gray-800 cursor-pointer hover:bg-gray-400 hover:cursor-pointer">
+                Không
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>

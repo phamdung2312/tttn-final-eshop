@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
+import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { backend_url } from "../../server";
@@ -11,25 +12,35 @@ import Loader from "../Layout/Loader";
 import { AiFillFileExcel } from "react-icons/ai";
 import * as XLSX from "xlsx";
 import ChartComponentShop from "./ChartComponentShop";
+import Notify from "../Notify/Notify";
 
 const AllProducts = () => {
   const [valStartDay, setValStartDay] = useState("");
   const [valEndDay, setValEndDay] = useState("");
   const [statistic, setStatistic] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [idProduct, setIdProduct] = useState();
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
-  console.log("seller", seller);
-
   const dispatch = useDispatch();
+  console.log("accept", accept);
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
   }, [dispatch]);
-
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+  // Notify
+  const handleAccept = () => {
+    dispatch(deleteProduct(idProduct));
+    setOpen(false);
     window.location.reload();
   };
+
+  const handleOpenDelete = (id) => {
+    setOpen(true);
+    setIdProduct(id);
+  };
+
   //Chọn ngày thống kê
   const handleStartDayChange = (e) => {
     setValStartDay(e.target.value);
@@ -178,7 +189,7 @@ const AllProducts = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
+            <Button onClick={() => handleOpenDelete(params.id)}>
               <AiOutlineDelete size={20} />
             </Button>
           </>
@@ -342,6 +353,34 @@ const AllProducts = () => {
               arrData={allProduct && allProduct}
               name="sản phẩm"></ChartComponentShop>
           )}
+        </div>
+      )}
+      {open && (
+        <div
+          id="toast"
+          class="fixed inset-0 flex items-center justify-center bg-edeff7">
+          <div class="bg-[#eef3ff] rounded-lg p-4 shadow-lg relative">
+            <div
+              onClick={() => setOpen(false)}
+              class="absolute top-0 right-0 mt-2 mr-2 hover:cursor-pointer">
+              <IoMdClose />
+            </div>
+            <p id="toast-message" class="text-gray-800 pt-5 flex items-center">
+              Bạn có chắc chắn muốn xóa không?
+            </p>
+            <div class="flex justify-end mt-4">
+              <button
+                onClick={handleAccept}
+                class="px-4 py-2 rounded-md bg-blue-500 text-white mr-2 hover:bg-blue-600 hover:cursor-pointer">
+                Có
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                class="px-4 py-2 rounded-md bg-gray-300 text-gray-800 cursor-pointer hover:bg-gray-400 hover:cursor-pointer">
+                Không
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>

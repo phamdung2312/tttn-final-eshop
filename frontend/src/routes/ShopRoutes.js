@@ -13,6 +13,7 @@ import ShopWithDrawMoneyPage from "../pages/Shop/ShopWithDrawMoneyPage";
 import ShopInboxPage from "../pages/Shop/ShopInboxPage";
 import ShopResetForgotPasswordPage from "../pages/Shop/ShopResetForgotPasswordPage";
 import ShopForgotPasswordPage from "../pages/Shop/ShopForgotPasswordPage";
+import ShopHomePage from "../pages/Shop/ShopHomePage";
 export {
   ShopResetForgotPasswordPage,
   ShopForgotPasswordPage,
@@ -29,4 +30,5 @@ export {
   ShopSettingsPage,
   ShopWithDrawMoneyPage,
   ShopInboxPage,
+  ShopHomePage,
 };

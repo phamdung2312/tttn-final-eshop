@@ -39,7 +39,8 @@ const UserInbox = () => {
       });
     });
   }, []);
-
+  console.log("currentChat", currentChat);
+  // add message
   useEffect(() => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
@@ -64,6 +65,8 @@ const UserInbox = () => {
     getConversation();
   }, [user, messages]);
   console.log("conversations", conversations);
+
+  // arrival online User
   useEffect(() => {
     if (user) {
       const sellerId = user?._id;
@@ -73,7 +76,8 @@ const UserInbox = () => {
       });
     }
   }, [user]);
-
+  console.log("onlineUsers", onlineUsers);
+  console.log("onlineUsers", onlineUsers);
   const onlineCheck = (chat) => {
     const chatMembers = chat.members.find((member) => member !== user?._id);
     const online = onlineUsers.find((user) => user.userId === chatMembers);
@@ -271,6 +275,7 @@ const MessageList = ({
   };
   console.log("user2", user);
   console.log("me", me);
+  console.log("data", data);
 
   useEffect(() => {
     setActiveStatus(online);
@@ -337,6 +342,7 @@ const SellerInbox = ({
   handleImageUpload,
 }) => {
   console.log("sellerId", sellerId);
+  console.log("userData", userData);
   return (
     <div className="w-[full] min-h-full flex flex-col justify-between p-5">
       {/* message header */}
@@ -375,12 +381,12 @@ const SellerInbox = ({
                   alt=""
                 />
               )}
-              {item.images && (
+              {/* {item.images && (
                 <img
                   src={`${backend_url}${item.images}`}
                   className="w-[300px] h-[300px] object-cover rounded-[10px] ml-2 mb-2"
                 />
-              )}
+              )} */}
               {item.text !== "" && (
                 <div>
                   <div
